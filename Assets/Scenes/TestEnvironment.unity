@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "CONTR\xD4LES \u2014 RHEAMAR ARENA\r\n\r\nD\xE9placement : Joystick gauche\r\nT\xE9l\xE9portation
+  m_text: "CONTR\xD4LES\r\n\r\nD\xE9placement : Joystick gauche\r\nT\xE9l\xE9portation
     : viser au joystick droit, rel\xE2cher pour confirmer\r\nProtection anti-cin\xE9tose
     : automatique pendant le d\xE9placement\r\n\r\nAppuie sur B pour masquer/afficher
     ce menu"

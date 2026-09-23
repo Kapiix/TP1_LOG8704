@@ -3,22 +3,11 @@ using UnityEngine.XR;
 
 public class ToggleUIPanel : MonoBehaviour
 {
-    [Tooltip("Le panneau UI à afficher/masquer")]
+    [Tooltip("Le panneau UI à afficher/masquer (glisse UI_Instructions ici)")]
     public GameObject uiPanel;
 
-    [Tooltip("La caméra du joueur")]
-    public Transform playerCamera;
-
-    [Tooltip("Distance devant le joueur où apparaît le panneau")]
-    public float distanceFromPlayer = 2f;
-
-    private bool isVisible = false;
+    private bool isVisible = true;
     private bool wasPressedLastFrame = false;
-
-    void Start()
-    {
-        uiPanel.SetActive(false); 
-    }
 
     void Update()
     {
@@ -26,21 +15,11 @@ public class ToggleUIPanel : MonoBehaviour
 
         if (rightController.TryGetFeatureValue(CommonUsages.secondaryButton, out bool isPressed))
         {
+            // On ne déclenche qu'au moment où le bouton vient d'être appuyé,
+            // pas à chaque frame où il reste enfoncé
             if (isPressed && !wasPressedLastFrame)
             {
                 isVisible = !isVisible;
-
-                if (isVisible)
-                {
-                    // Repositionne le panneau devant le joueur, à hauteur d'yeux
-                    Vector3 flatForward = new Vector3(playerCamera.forward.x, 0, playerCamera.forward.z).normalized;
-                    Vector3 targetPosition = playerCamera.position + flatForward * distanceFromPlayer;
-                    targetPosition.y = playerCamera.position.y;
-
-                    uiPanel.transform.position = targetPosition;
-                    uiPanel.transform.rotation = Quaternion.LookRotation(flatForward);
-                }
-
                 uiPanel.SetActive(isVisible);
             }
             wasPressedLastFrame = isPressed;
