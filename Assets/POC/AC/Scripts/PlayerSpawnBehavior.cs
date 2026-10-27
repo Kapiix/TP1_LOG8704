@@ -1,5 +1,7 @@
 using Unity.Netcode;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace ThroughHellAndFire.POC
@@ -8,6 +10,7 @@ namespace ThroughHellAndFire.POC
     {
         [SerializeField] GameObject myXRCam;
         [SerializeField] InputActionManager myInputAction;
+        [SerializeField] GameObject locomotion;
 
         void Awake()
         {
@@ -21,7 +24,20 @@ namespace ThroughHellAndFire.POC
             {
                 myXRCam.GetComponent<Camera>().enabled = false;
                 myXRCam.GetComponent<AudioListener>().enabled = false;
-                myInputAction.enabled = false;
+                myXRCam.GetComponent<TrackedPoseDriver>().enabled = false;
+                //myInputAction.enabled = false;
+                var tpd = GetComponentsInChildren<TrackedPoseDriver>(true);
+                foreach (var item in tpd)
+                {
+                    item.enabled = false;
+                }
+            }
+            if (IsOwner)
+            {
+                GetComponent<CharacterController>().enabled = true;
+                myInputAction.enabled = true;
+                myInputAction.GetComponent<XROrigin>().enabled = true;
+                locomotion.SetActive(true);
             }
         }
 
